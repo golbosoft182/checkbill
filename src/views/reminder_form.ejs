@@ -1,0 +1,44 @@
+<div class="mb-3">
+  <h1 class="h3"><%= reminder ? 'Edit Reminder' : 'Tambah Reminder' %></h1>
+</div>
+<form method="POST" action="<%= reminder ? '/reminders/' + reminder.id + '/edit' : '/reminders/new' %>" class="row g-3" style="max-width:700px;">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <div class="col-md-6">
+    <label class="form-label">Perusahaan</label>
+    <select class="form-select" name="company_id">
+      <% companies.forEach(c => { %>
+        <option value="<%= c.id %>" <%= reminder && reminder.company_id === c.id ? 'selected' : '' %>><%= c.name %> (<%= c.type %>)</option>
+      <% }) %>
+    </select>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Judul</label>
+    <input class="form-control" type="text" name="title" value="<%= reminder ? reminder.title : '' %>" required />
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Tanggal Jatuh Tempo</label>
+    <input class="form-control" type="date" name="due_date" value="<%= reminder ? reminder.due_date.toISOString ? reminder.due_date.toISOString().slice(0,10) : reminder.due_date : '' %>" required />
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Waktu Jatuh Tempo</label>
+    <input class="form-control" type="time" name="due_time" value="<%= reminder ? reminder.due_time : '' %>" required />
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Frequensi</label>
+    <select class="form-select" name="frequency">
+      <option value="once" <%= reminder && reminder.frequency==='once' ? 'selected' : '' %>>Sekali</option>
+      <option value="daily" <%= reminder && reminder.frequency==='daily' ? 'selected' : '' %>>Harian</option>
+      <option value="weekly" <%= reminder && reminder.frequency==='weekly' ? 'selected' : '' %>>Mingguan</option>
+      <option value="monthly" <%= reminder && reminder.frequency==='monthly' ? 'selected' : '' %>>Bulanan</option>
+      <option value="yearly" <%= reminder && reminder.frequency==='yearly' ? 'selected' : '' %>>Tahunan</option>
+    </select>
+  </div>
+  <div class="col-12">
+    <label class="form-label">Catatan</label>
+    <textarea class="form-control" name="notes" rows="3"><%= reminder ? (reminder.notes || '') : '' %></textarea>
+  </div>
+  <div class="col-12 d-flex gap-2">
+    <button type="submit" class="btn btn-primary">Simpan</button>
+    <a href="/reminders" class="btn btn-secondary">Batal</a>
+  </div>
+ </form>

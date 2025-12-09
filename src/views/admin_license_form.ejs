@@ -1,0 +1,25 @@
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h1 class="h4 mb-3">Tambah Kode Beli</h1>
+        <% if (error) { %>
+          <div class="alert alert-danger"><%= error %></div>
+        <% } %>
+        <form method="POST" action="/admin/licenses/new">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <div class="mb-3">
+            <label class="form-label">Kode</label>
+            <input class="form-control" type="text" name="code" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Catatan</label>
+            <input class="form-control" type="text" name="note" />
+          </div>
+          <button class="btn btn-primary" type="submit">Simpan</button>
+          <a class="btn btn-secondary" href="/admin/licenses">Batal</a>
+        </form>
+      </div>
+    </div>
+  </div>
+ </div>

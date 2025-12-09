@@ -1,0 +1,38 @@
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <h1 class="h3 mb-0">Master Perusahaan</h1>
+  <a href="/companies/new" class="btn btn-primary btn-sm">Tambah Perusahaan</a>
+</div>
+<table class="table table-hover align-middle">
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>Nama</th>
+      <th>Tipe</th>
+      <th>Email</th>
+      <th>Telepon</th>
+      <th>Dibuat</th>
+      <% if (isSuper) { %><th>Aksi</th><% } %>
+    </tr>
+  </thead>
+  <tbody>
+  <% let i = 0; companies.forEach(c => { i++; %>
+    <tr>
+      <td><%= i %></td>
+      <td><%= c.name %></td>
+      <td><%= c.type %></td>
+      <td><%= c.email || '-' %></td>
+      <td><%= c.phone || '-' %></td>
+      <td><%= new Date(c.created_at).toLocaleString('id-ID') %></td>
+      <% if (isSuper) { %>
+        <td class="d-flex gap-2">
+          <a class="btn btn-sm btn-outline-primary" href="/companies/<%= c.id %>/edit">Edit</a>
+          <form method="POST" action="/companies/<%= c.id %>/delete" onsubmit="return confirm('Hapus perusahaan ini?');">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button class="btn btn-sm btn-outline-danger">Delete</button>
+          </form>
+        </td>
+      <% } %>
+    </tr>
+  <% }) %>
+  </tbody>
+ </table>

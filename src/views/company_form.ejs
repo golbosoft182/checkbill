@@ -1,0 +1,29 @@
+<div class="mb-3">
+  <h1 class="h3"><%= company ? 'Edit Perusahaan' : 'Tambah Perusahaan' %></h1>
+</div>
+<form method="POST" action="<%= company ? '/companies/' + company.id + '/edit' : '/companies/new' %>" class="row g-3" style="max-width:600px;">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <div class="col-12">
+    <label class="form-label">Nama Perusahaan</label>
+    <input class="form-control" type="text" name="name" value="<%= company ? company.name : '' %>" required />
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Tipe</label>
+    <select class="form-select" name="type">
+      <option value="company" <%= company && company.type==='company' ? 'selected' : '' %>>Perusahaan</option>
+      <option value="hospital" <%= company && company.type==='hospital' ? 'selected' : '' %>>Rumah Sakit</option>
+    </select>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Email</label>
+    <input class="form-control" type="email" name="email" value="<%= company ? company.email : '' %>" />
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Telepon</label>
+    <input class="form-control" type="text" name="phone" value="<%= company ? company.phone : '' %>" />
+  </div>
+  <div class="col-12 d-flex gap-2">
+    <button type="submit" class="btn btn-primary">Simpan</button>
+    <a href="/companies" class="btn btn-secondary">Batal</a>
+  </div>
+ </form>

@@ -1,0 +1,107 @@
+<% const nowTs = +now; %>
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <h1 class="h3 mb-0">Dashboard Alert Jatuh Tempo</h1>
+  <div>
+    <a href="/companies/new" class="btn btn-outline-primary btn-sm">Tambah Perusahaan</a>
+    <a href="/reminders/new" class="btn btn-primary btn-sm">Tambah Reminder</a>
+  </div>
+</div>
+<p class="text-muted">Menampilkan reminder yang akan jatuh tempo dalam 7 hari ke depan atau sudah lewat. Gunakan pencarian dan filter untuk mempermudah.</p>
+
+<div class="row g-2 mb-3">
+  <div class="col-sm-6 col-lg-4">
+    <input id="searchInput" class="form-control" placeholder="Cari perusahaan / judul..." />
+  </div>
+  <div class="col-sm-3 col-lg-2">
+    <select id="freqFilter" class="form-select">
+      <option value="all">Semua Frekuensi</option>
+      <option value="once">Sekali</option>
+      <option value="daily">Harian</option>
+      <option value="weekly">Mingguan</option>
+      <option value="monthly">Bulanan</option>
+      <option value="yearly">Tahunan</option>
+    </select>
+  </div>
+  <div class="col-sm-3 col-lg-2">
+    <select id="statusFilter" class="form-select">
+      <option value="all">Semua Status</option>
+      <option value="overdue">Lewat Jatuh Tempo</option>
+      <option value="soon">Segera (≤3 hari)</option>
+    </select>
+  </div>
+</div>
+
+<table class="table table-hover align-middle">
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>Perusahaan</th>
+      <th>Judul</th>
+      <th>Frekuensi</th>
+      <th>Jadwal Berikutnya</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody id="alertsTableBody">
+    <% let i = 0; alerts.forEach(a => { i++; 
+      const dueTs = +new Date(a.next_run);
+      const overdue = dueTs < nowTs;
+      const daysLeft = Math.ceil((dueTs - nowTs) / (1000*60*60*24));
+      const rowClasses = `${overdue || daysLeft <= 3 ? 'warning' : ''} freq-${a.frequency}`;
+      const statusText = overdue ? 'Lewat Jatuh Tempo' : `Sisa ${daysLeft} hari`;
+      const statusClass = overdue ? 'danger' : 'info';
+    %>
+      <tr class="<%= rowClasses %>" data-frequency="<%= a.frequency %>" data-status="<%= overdue ? 'overdue' : (daysLeft <= 3 ? 'soon' : 'normal') %>" data-text="<%= (a.company_name + ' ' + a.title).toLowerCase() %>">
+        <td class="row-number"><%= i %></td>
+        <td>
+          <div class="fw-semibold"><%= a.company_name %> (<%= a.company_type %>)</div>
+        </td>
+        <td><%= a.title %></td>
+        <td>
+          <span class="badge rounded-pill bg-secondary"><%= a.frequency %></span>
+        </td>
+        <td><strong><%= new Date(a.next_run).toLocaleString('id-ID') %></strong></td>
+        <td>
+          <span class="badge bg-<%= statusClass %>"><%= statusText %></span>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<script>
+  const searchInput = document.getElementById('searchInput');
+  const freqFilter = document.getElementById('freqFilter');
+  const statusFilter = document.getElementById('statusFilter');
+  const rows = Array.from(document.querySelectorAll('#alertsTableBody tr'));
+
+  function applyFilter() {
+    const q = (searchInput.value || '').toLowerCase();
+    const f = freqFilter.value;
+    const s = statusFilter.value;
+    rows.forEach(r => {
+      const txt = r.dataset.text || '';
+      const freq = r.dataset.frequency;
+      const st = r.dataset.status;
+      const matchText = !q || txt.includes(q);
+      const matchFreq = f === 'all' || freq === f;
+      const matchStatus = s === 'all' || st === s;
+      r.style.display = (matchText && matchFreq && matchStatus) ? '' : 'none';
+    });
+    renumber();
+  }
+
+  searchInput.addEventListener('input', applyFilter);
+  freqFilter.addEventListener('change', applyFilter);
+  statusFilter.addEventListener('change', applyFilter);
+
+  function renumber() {
+    let n = 1;
+    rows.forEach(r => {
+      if (r.style.display === 'none') return;
+      const cell = r.querySelector('.row-number');
+      if (cell) cell.textContent = n++;
+    });
+  }
+  renumber();
+</script>

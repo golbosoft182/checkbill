@@ -1,0 +1,40 @@
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <h1 class="h3 mb-0">Daftar Reminder</h1>
+  <a href="/reminders/new" class="btn btn-primary btn-sm">Tambah Reminder</a>
+</div>
+<table class="table table-hover align-middle">
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>Perusahaan</th>
+      <th>Judul</th>
+      <th>Frequensi</th>
+      <th>Jatuh Tempo</th>
+      <th>Berikutnya</th>
+      <th>Status</th>
+      <% if (isSuper) { %><th>Aksi</th><% } %>
+    </tr>
+  </thead>
+  <tbody>
+    <% let i = 0; reminders.forEach(r => { i++; %>
+      <tr>
+        <td><%= i %></td>
+        <td><%= r.company_name %></td>
+        <td><%= r.title %></td>
+        <td><%= r.frequency %></td>
+        <td><%= new Date(`${r.due_date}T${r.due_time}`).toLocaleString('id-ID') %></td>
+        <td><%= new Date(r.next_run).toLocaleString('id-ID') %></td>
+        <td><%= r.status %></td>
+        <% if (isSuper) { %>
+          <td class="d-flex gap-2">
+            <a class="btn btn-sm btn-outline-primary" href="/reminders/<%= r.id %>/edit">Edit</a>
+            <form method="POST" action="/reminders/<%= r.id %>/delete" onsubmit="return confirm('Hapus reminder ini?');">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <button class="btn btn-sm btn-outline-danger">Delete</button>
+            </form>
+          </td>
+        <% } %>
+      </tr>
+    <% }) %>
+  </tbody>
+ </table>

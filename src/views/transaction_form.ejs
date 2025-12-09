@@ -1,0 +1,38 @@
+<div class="mb-3">
+  <h1 class="h3"><%= trx ? 'Edit Transaksi' : 'Tambah Transaksi' %></h1>
+</div>
+<form method="POST" action="<%= trx ? '/transactions/' + trx.id + '/edit' : '/transactions/new' %>" class="row g-3" style="max-width:700px;">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <div class="col-md-6">
+    <label class="form-label">Perusahaan</label>
+    <select class="form-select" name="company_id">
+      <% companies.forEach(c => { %>
+        <option value="<%= c.id %>" <%= trx && trx.company_id === c.id ? 'selected' : '' %>><%= c.name %> (<%= c.type %>)</option>
+      <% }) %>
+    </select>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Judul</label>
+    <input class="form-control" type="text" name="title" value="<%= trx ? trx.title : '' %>" required />
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Tanggal</label>
+    <input class="form-control" type="date" name="trx_date" value="<%= trx ? (trx.trx_date.toISOString ? trx.trx_date.toISOString().slice(0,10) : trx.trx_date) : '' %>" required />
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Jumlah</label>
+    <input class="form-control" type="number" step="0.01" name="amount" value="<%= trx ? trx.amount : '' %>" required />
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Status</label>
+    <select class="form-select" name="status">
+      <option value="pending" <%= trx && trx.status==='pending' ? 'selected' : '' %>>Pending</option>
+      <option value="paid" <%= trx && trx.status==='paid' ? 'selected' : '' %>>Paid</option>
+      <option value="overdue" <%= trx && trx.status==='overdue' ? 'selected' : '' %>>Overdue</option>
+    </select>
+  </div>
+  <div class="col-12 d-flex gap-2">
+    <button type="submit" class="btn btn-primary">Simpan</button>
+    <a href="/transactions" class="btn btn-secondary">Batal</a>
+  </div>
+ </form>

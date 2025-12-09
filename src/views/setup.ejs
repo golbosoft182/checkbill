@@ -1,0 +1,51 @@
+<div class="row justify-content-center mt-4">
+  <div class="col-md-8 col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <h1 class="h4 mb-3">Setup Aplikasi</h1>
+        <% if (error) { %>
+          <div class="alert alert-danger"><%= error %></div>
+        <% } %>
+        <form method="POST" action="/setup">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <h2 class="h6">Konfigurasi Database MySQL</h2>
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label">Host</label>
+              <input class="form-control" type="text" name="mysql_host" value="<%= values.mysql_host %>" required />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Nama Database</label>
+              <input class="form-control" type="text" name="mysql_db" value="<%= values.mysql_db %>" required />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">User</label>
+              <input class="form-control" type="text" name="mysql_user" value="<%= values.mysql_user %>" required />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Password</label>
+              <input class="form-control" type="password" name="mysql_password" value="<%= values.mysql_password %>" required />
+            </div>
+          </div>
+          <h2 class="h6">Kode Beli</h2>
+          <div class="mb-3">
+            <input class="form-control" type="text" name="license_code" placeholder="Masukkan kode beli" required />
+            <div class="form-text">Kode beli disuplai oleh programmer.</div>
+          </div>
+          <h2 class="h6">Akun Admin</h2>
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label">Username Admin</label>
+              <input class="form-control" type="text" name="admin_username" value="admin" required />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Password Admin</label>
+              <input class="form-control" type="password" name="admin_password" value="admin123" required />
+            </div>
+          </div>
+          <button class="btn btn-primary" type="submit">Jalankan Setup</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

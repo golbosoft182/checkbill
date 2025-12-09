@@ -1,0 +1,38 @@
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <h1 class="h3 mb-0">Daftar Transaksi</h1>
+  <a href="/transactions/new" class="btn btn-primary btn-sm">Tambah Transaksi</a>
+</div>
+<table class="table table-hover align-middle">
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>Perusahaan</th>
+      <th>Judul</th>
+      <th>Tanggal</th>
+      <th>Jumlah</th>
+      <th>Status</th>
+      <% if (isSuper) { %><th>Aksi</th><% } %>
+    </tr>
+  </thead>
+  <tbody>
+    <% let i = 0; transactions.forEach(t => { i++; %>
+      <tr>
+        <td><%= i %></td>
+        <td><%= t.company_name %></td>
+        <td><%= t.title %></td>
+        <td><%= new Date(t.trx_date).toLocaleDateString('id-ID') %></td>
+        <td>Rp <%= Number(t.amount).toLocaleString('id-ID') %></td>
+        <td><span class="badge bg-<%= t.status === 'paid' ? 'success' : t.status === 'overdue' ? 'danger' : 'secondary' %>"><%= t.status %></span></td>
+        <% if (isSuper) { %>
+          <td class="d-flex gap-2">
+            <a class="btn btn-sm btn-outline-primary" href="/transactions/<%= t.id %>/edit">Edit</a>
+            <form method="POST" action="/transactions/<%= t.id %>/delete" onsubmit="return confirm('Hapus transaksi ini?');">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <button class="btn btn-sm btn-outline-danger">Delete</button>
+            </form>
+          </td>
+        <% } %>
+      </tr>
+    <% }) %>
+  </tbody>
+ </table>

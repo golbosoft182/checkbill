@@ -1,0 +1,36 @@
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <h1 class="h3 mb-0">Admin: Users</h1>
+  <a href="/admin/users/new" class="btn btn-primary btn-sm">Tambah User</a>
+ </div>
+
+<% if (error) { %>
+  <div class="alert alert-danger"><%= error %></div>
+<% } %>
+
+<table class="table table-hover align-middle">
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>Username</th>
+      <th>Role</th>
+      <th>Dibuat</th>
+      <th>Aksi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% let i = 0; users.forEach(u => { i++; %>
+      <tr>
+        <td><%= i %></td>
+        <td><%= u.username %></td>
+        <td><span class="badge bg-<%= u.role === 'super_admin' ? 'danger' : (u.role === 'admin' ? 'warning' : 'secondary') %>"><%= u.role %></span></td>
+        <td><%= new Date(u.created_at).toLocaleString('id-ID') %></td>
+        <td>
+          <form method="POST" action="/admin/users/<%= u.id %>/delete" onsubmit="return confirm('Hapus user ini?');">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button class="btn btn-sm btn-outline-danger" <%= u.role === 'super_admin' ? 'disabled' : '' %>>Delete</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+ </table>
