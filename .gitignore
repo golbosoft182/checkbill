@@ -1,4 +1,33 @@
 node_modules/
 .DS_Store
 src/config.json
+
+# Logs
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Env files
+.env
+.env.*
+
+# Editors/IDE
+.vscode/
+.idea/
+
+# Build outputs
+dist/
+build/
+coverage/
+.cache/
+.nyc_output/
+
+# Local databases
+*.sqlite
+*.sqlite3
+*.db
+
+# Trae IDE metadata
+.trae/
