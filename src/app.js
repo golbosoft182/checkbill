@@ -231,7 +231,7 @@ app.post('/setup', async (req, res) => {
     // Validate license
     const [lrows] = await (await initPool()).query('SELECT * FROM license_keys WHERE code = ? AND status != "revoked"', [license_code]);
     if (lrows.length === 0) {
-      return res.render('setup', { error: 'Kode beli tidak valid. Hubungi programmer untuk kode yang benar.', values: { mysql_host, mysql_user, mysql_password, mysql_db } });
+      return res.render('setup', { error: 'Kode beli tidak valid. Hubungi programmer via WhatsApp +62 821-3940-3434 untuk kode yang benar.', values: { mysql_host, mysql_user, mysql_password, mysql_db } });
     }
     const bcrypt = require('bcryptjs');
     const hash = await bcrypt.hash(admin_password, 10);

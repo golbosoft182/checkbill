@@ -6,7 +6,7 @@ CheckBill adalah aplikasi billing reminder yang menampilkan pengingat jatuh temp
 - Node.js 18+ terpasang
 - MySQL aktif (localhost atau server)
 - Informasi koneksi MySQL: host, nama database, user, password
-- Kode beli (lisensi) yang disuplai oleh programmer
+- Untuk Kode Beli/lisensi, silahkan hubungi programmer via WhatsApp: https://wa.me/6282139403434
 
 ## Instalasi di Localhost
 1. Ekstrak atau clone proyek ke folder lokal.
@@ -25,7 +25,7 @@ CheckBill adalah aplikasi billing reminder yang menampilkan pengingat jatuh temp
    - `Nama Database`: contoh `checkbilldb`
    - `User`: contoh `root`
    - `Password`: contoh `asdfQWER789` (sesuaikan dengan MySQL Anda)
-   - `Kode Beli`: masukkan kode yang diberikan oleh programmer
+-   - `Kode Beli`: silahkan hubungi programmer via WhatsApp: https://wa.me/6282139403434
    - `Akun Admin`: isi username & password admin
 7. Klik “Jalankan Setup”, lalu login di `http://localhost:3000/login`.
 
@@ -33,24 +33,18 @@ CheckBill adalah aplikasi billing reminder yang menampilkan pengingat jatuh temp
 1. Buat database dan user MySQL di cPanel, catat host (sering `localhost`), nama DB, user, password.
 2. Deploy kode aplikasi ke server (cPanel Application Manager atau Node.js support). Pastikan Node.js versi 18+.
 3. Jalankan aplikasi dan buka `https://domain-anda/setup`.
-4. Isi form Setup dengan kredensial MySQL cPanel dan masukkan `Kode Beli`.
+4. Isi form Setup dengan kredensial MySQL cPanel dan minta `Kode Beli` kepada programmer via WhatsApp +62 821-3940-3434.
 5. Selesai setup, login di `https://domain-anda/login`.
 
 ## Tentang Setup & Lisensi
 - Sebelum dapat digunakan, aplikasi menampilkan halaman Setup untuk:
   - Konfigurasi MySQL
-  - Validasi `Kode Beli`
+-  - Validasi `Kode Beli` (hubungi programmer via WhatsApp: https://wa.me/6282139403434)
   - Pembuatan akun admin pertama
 - Setelah berhasil, status instalasi disimpan dan aplikasi akan meminta login sebelum akses fitur.
 
-## Menyediakan Kode Beli (untuk Programmer)
-Masukkan kode beli ke tabel `license_keys` di database target:
-```sql
-INSERT INTO license_keys (code, status, note)
-VALUES ('KODE-BELI-ANDA', 'unused', 'Distribusi batch');
-```
-- Saat setup, user memasukkan `KODE-BELI-ANDA`. Sistem akan mengaktifkan kode (`status = 'active'`).
-- Untuk menonaktifkan kode, set `status = 'revoked'`.
+## Kode Beli / Lisensi
+- Untuk mendapatkan atau mengelola lisensi, silahkan hubungi programmer via WhatsApp: https://wa.me/6282139403434.
 
 ## Fitur Utama
 - Dashboard tabel: pencarian, filter frekuensi, filter status, penomoran otomatis.
@@ -84,7 +78,7 @@ VALUES ('KODE-BELI-ANDA', 'unused', 'Distribusi batch');
 4. Jalankan `npm start` kembali.
 
 ## Kontak
-Untuk bantuan lisensi dan instalasi, hubungi programmer penyedia kode beli.
+Untuk bantuan lisensi dan instalasi, silahkan hubungi programmer via WhatsApp: https://wa.me/6282139403434.
 
 ## Bagaimana Cara Menggunakan
 Login at http://localhost:3000/login with one of:
