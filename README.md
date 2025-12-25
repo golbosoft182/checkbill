@@ -1,6 +1,6 @@
 # CheckBill — Panduan Instalasi & Penggunaan
 
-CheckBill adalah aplikasi billing reminder yang menampilkan pengingat jatuh tempo (harian/mingguan/bulanan/tahunan) dengan dashboard, master perusahaan, reminder, dan transaksi. Aplikasi ini mendukung instalasi di localhost (Laragon/XAMPP) maupun server hosting/cPanel.
+CheckBill adalah aplikasi billing reminder yang menampilkan pengingat jatuh tempo (harian/mingguan/bulanan/tahunan) dengan dashboard, master perusahaan, reminder, dan transaksi.
 
 ## Prasyarat
 - Node.js 18+ terpasang
